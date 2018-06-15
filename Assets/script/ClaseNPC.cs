@@ -39,6 +39,7 @@ public class ClaseNPC : MonoBehaviour
     }
     public virtual void Update()
     {
+        StateReation();
         switch (cas)//the switch is used for different positions where the zombie is directed.
         {
             case 1:
@@ -60,23 +61,11 @@ public class ClaseNPC : MonoBehaviour
                 transform.Rotate(-Vector3.up * Rot);
                 break;
             case 7:
-                transform.position += new Vector3(0, 0, 0);
+                transform.position += new Vector3(0,0,0);
                 break;
-            case 8:
-                //foreach (GameObject go in Manager.zomcivnpc)
-                //{
-                //    if (go.name == "Hero")
-                //    {
-                //        if (Vector3.Distance(go.transform.position, GameObject.FindGameObjectWithTag("Hero").transform.position) < distantate)
-                //        {
-                //            direc = Vector3.Normalize(go.transform.position - transform.position);
-                //            transform.position += direc * distantate;
-                //            Debug.Log("ya entro");
-                //        }
-                //    }
-                //}
-                StateReation();
-                break;
+            //case 8:
+            //    StateReation();
+            //    break;
         } 
     }
     public void Move()//a function is created for the movement.
@@ -90,29 +79,29 @@ public class ClaseNPC : MonoBehaviour
         {
             if (dat.age > 15 && dat.age < 30)
             {
-                Speed = 10;
+                Speed = 1;
             }
             else if (dat.age > 31 && dat.age < 46)
             {
-                Speed = 9;
+                Speed = 1;
             }
             else if (dat.age > 47 && dat.age < 62)
             {
-                Speed = 7;
+                Speed = 1;
             }
             else if (dat.age > 63 && dat.age < 78)
             {
-                Speed = 5;
+                Speed = 1;
             }
             else if (dat.age > 79 && dat.age < 94)
             {
-                Speed = 3;
+                Speed = 1;
             }
             else if (dat.age > 95 && dat.age < 100)
             {
-                Speed = 2;
+                Speed = 1;
             }
-            cas = Random.Range(1, 7);//calls the switch to move in different positions.
+            cas = Random.Range(1, 4);//calls the switch to move in different positions.
             StartCoroutine(Movement());//it's called coroutine.
         }
         else if (dat.keep == state.rotation)//if not, if the state this rotation.
@@ -120,50 +109,56 @@ public class ClaseNPC : MonoBehaviour
             cas = Random.Range(5, 7);//calls the switch to move in different positions.
             StartCoroutine(Movement());//it's called coroutine
         }
-        else if (dat.keep == state.StateReation)
-        {
-            cas = 8;
-            StartCoroutine(Movement());
-        }
+        //else if (dat.keep == state.StateReation)
+        //{
+        //   
+        //}
 
     }
-   
-    IEnumerator Movement()//se hace una coroutine para el estado del mivimeinto.
+
+IEnumerator Movement()//se hace una coroutine para el estado del mivimeinto.
+{
+    yield return new WaitForSeconds(3f);//takes 3 seconds to work.
+    dat.keep = (state)Random.Range(0, 5);//is called one of the two states.
+    Move();//is called the Move function.
+    yield return new WaitForSeconds(3f);//takes 3 seconds to work.
+}
+public void StateReation()
     {
-        yield return new WaitForSeconds(3f);//takes 3 seconds to work.
-        dat.keep = (state)Random.Range(0, 5);//is called one of the two states.
-        Move();//is called the Move function.
-        yield return new WaitForSeconds(3f);//takes 3 seconds to work.
-    }
-    public void StateReation()
-    {
+        GameObject her = GameObject.FindGameObjectWithTag("Hero");
+        List<GameObject> Lzom = new List<GameObject>();
+        List<GameObject> Lciv = new List<GameObject>();
+        float cual = 0.01f;
         foreach (GameObject go in Manager.zomcivnpc)
         {
-            if (gameObject.tag == "zombie")
+            if (go.tag == "zombie")
             {
-                float distan = Vector3.Distance(go.transform.position, transform.position);
-                if (distan <= 5f)
-                {
-                    Vector3 direc = transform.position = go.transform.position = gameObject.transform.position;
-                    direc.y = 0;
-                    gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(direc), .1f);
-
-                    if (distan > 1) gameObject.transform.Translate(0, 0, .1f);
-                }
+                Lzom.Add(go);
+                
             }
-            if (gameObject.tag == "civic")
+            if (go.tag == "civic")
             {
-                float distan = Vector3.Distance(go.transform.position, transform.position);
-                if (distan <= 5f)
-                {
-                    Vector3 direc = transform.position = go.transform.position = gameObject.transform.position;
-                    direc.y = 0;
-                    gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(direc), .1f);
-
-                    if (distan > 1) gameObject.transform.Translate(0, 0, -.1f);
-                }
+                Lciv.Add(go);
             }
         }
+        foreach (GameObject to in Lzom)
+        {
+
+            foreach (GameObject ji in Lciv)
+            {
+                float dist = Vector3.Distance(to.transform.position, ji.transform.position);
+                if (dist <= 5f)
+                {
+                    to.transform.position = Vector3.MoveTowards(to.transform.position, ji.transform.position, cual);
+                }
+            }
+            float dist2 = Vector3.Distance(to.transform.position, her.transform.position);
+            if (dist2 <= 5f)
+            {
+                to.transform.position = Vector3.MoveTowards(to.transform.position, her.transform.position, cual);
+            }
+        }
+
     }
 
 }

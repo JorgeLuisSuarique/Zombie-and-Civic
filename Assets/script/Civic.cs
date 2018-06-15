@@ -20,7 +20,7 @@ namespace NPC
             {
                 base.Herent();
                 CInfor.name = (civ)Random.Range(0, 19);//the names of the civilians in the list are added.
-                gameObject.tag = "civic";
+                //gameObject.tag = "civic";
             }
             override public void Herent()
             {

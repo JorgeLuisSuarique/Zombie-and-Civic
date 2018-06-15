@@ -19,15 +19,12 @@ public class Manager : MonoBehaviour
     public Text civText;//becomes a public variable for the Civic text.
     int contzom; //a counter is made for the Zombie's text.
     int contciv;//a counter is made for the Civic text.
-    public static Transform tranforZombie;
-    public Transform tz;
 
     public GameObject panelHero;
     public Text textZomCiv;
 
     void Awake()
 	{
-        tranforZombie = tz;
         panelHero.gameObject.SetActive(false);
 		Instancias = Random.Range(new Instanciar().identi, IDI);//the objects are instantiated between the construct of the Instanciar and conts class.
         for (int i = 0; i < Instancias; i++)//by the time the cubes are started.
@@ -91,12 +88,14 @@ public class Manager : MonoBehaviour
         PerCube.transform.position = new Vector3(Mathf.Clamp(corX, -45, 45), 0.5f, Mathf.Clamp(corZ, -45, 45));//zombie cubes are placed in random places.
         PerCube.AddComponent<Zombie>();//to the zombie is added the Zombie class.
         PerCube.name = "Zombie";//the name of the object is added.
+        PerCube.tag = "zombie";
     }
     void Civic()//a function for the Civic class.
     {
         PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the primitive civilian.
         PerCube.transform.position = new Vector3(corX, 0.5f, corZ);//civilian cubes are placed in random places.
         PerCube.name = "Civic";//the name of the object is added.
+        PerCube.tag = "civic";
         PerCube.AddComponent<Civic>();//to the civillian is added the Civic class.
     }
 }

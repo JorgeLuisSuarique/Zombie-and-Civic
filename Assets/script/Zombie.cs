@@ -26,7 +26,7 @@ namespace NPC
                 ZD.food = (comida)Random.Range(0, 5);//the food is chosen at random between 0 and 5.
                 iZomColor = Random.Range(1, 4);//the color is randomly distributed again.
                 dat.keepmove = 40 / dat.age;
-                gameObject.tag = "zombie";
+                //gameObject.tag = "zombie";
             }
             override public void Herent()
             {
@@ -34,21 +34,7 @@ namespace NPC
                 Move();
                 dat.age = Random.Range(15, 100);//the age of the civilians is added at random between 15 and 100 years of age.
             }
-            //public override void StateReation()
-            //{
-            //    foreach (GameObject go in Manager.zomcivnpc)
-            //    {
-            //        if (go.GetComponent<Hero>() || go.GetComponent<Civic>())
-            //        {
-            //            float distan = Vector3.Distance(go.transform.position, transform.position);
-            //            if (distan <= 5f)
-            //            {
-            //                transform.position = Vector3.MoveTowards(transform.position, go.transform.position, dat.keepmove)*Time.deltaTime;
-            //            }
-            //            Debug.Log("te estoy persigueindo");
-            //        }
-            //    }
-            //}
+        
             public override void Update()
             {
                 base.Update();
