@@ -157,6 +157,17 @@ public void StateReation()
             {
                 to.transform.position = Vector3.MoveTowards(to.transform.position, her.transform.position, cual);
             }
+            
+        }
+        foreach (GameObject ji in Lciv)
+        {
+            {
+                float dist3 = Vector3.Distance (ji.transform.position, to.transform.position);
+                if (dist3 <= 5f)
+                {
+                    ji.transform.position = Vector3.MoveTowards(ji.transform.position , -to.transform.position, cual);
+                }
+            }
         }
 
     }
