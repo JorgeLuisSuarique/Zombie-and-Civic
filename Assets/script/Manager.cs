@@ -21,6 +21,8 @@ public class Manager : MonoBehaviour
     int contciv;//a counter is made for the Civic text.
 
     public GameObject panelHero;
+    public GameObject panelGO;
+    public Text texZGO;
     public Text textZomCiv;
 
     void Awake()

@@ -131,12 +131,12 @@ public void StateReation()
         float cual = 0.01f;
         foreach (GameObject go in Manager.zomcivnpc)
         {
-            if (go.tag == "zombie")
+            if (go.GetComponent<Zombie>())
             {
                 Lzom.Add(go);
                 
             }
-            if (go.tag == "civic")
+            if (go.GetComponent<Civic>())
             {
                 Lciv.Add(go);
             }
@@ -161,6 +161,7 @@ public void StateReation()
         }
         foreach (GameObject ji in Lciv)
         {
+            foreach (GameObject to in Lzom)
             {
                 float dist3 = Vector3.Distance (ji.transform.position, to.transform.position);
                 if (dist3 <= 5f)

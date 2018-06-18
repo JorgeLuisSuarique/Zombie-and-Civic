@@ -27,16 +27,24 @@ public class Hero : MonoBehaviour
             manger.panelHero.SetActive(true);
             dt = collision.gameObject.GetComponent<ClaseNPC>().NewData();
             civil = collision.gameObject.GetComponent<Civic>().civiZen();//when it collides with the Civic class.
-            //Debug.Log();//this text appears on the console.
             manger.textZomCiv.text = "Hola soy " + civil.name + " y tengo " + dt.age + " años";
         }
         if(collision.gameObject.GetComponent<Zombie>())//when it collides with the Zombie class.
         {
             manger.panelHero.SetActive(true);
+            manger.panelGO.SetActive(true);
             dt = collision.gameObject.GetComponent<ClaseNPC>().NewData();
             zom = collision.gameObject.GetComponent<Zombie>().zombiezen();//when it collides with the Zombie class.
-            //Debug.Log();//this text appears on the console.
             manger.textZomCiv.text = "waaaarrr me comere tu " + zom.food;
+            manger.texZGO.text = "Game Over";
+            if (Time.timeScale == 1.0f)
+            {
+                Time.timeScale = 0.0f;
+            }
+            else
+            {
+                Time.timeScale = 1.0f;
+            }
         }
     }
 }
