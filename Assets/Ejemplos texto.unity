@@ -983,6 +983,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f971a07e1601efe4096479e54777a9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Guns: {fileID: 1583809133342066, guid: b471fb1329fb2194fbb05fa591bd9f75, type: 2}
+  gunser: {fileID: 1583809133342066, guid: b471fb1329fb2194fbb05fa591bd9f75, type: 2}
+  GunsDam: 0
+  Force: 9000
+  FireD: 0.05
   zomText: {fileID: 1291656463}
   civText: {fileID: 1887438699}
   panelHero: {fileID: 321506426}

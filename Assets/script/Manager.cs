@@ -7,12 +7,23 @@ using UnityEngine.UI;
 public class Manager : MonoBehaviour 
 {
     GameObject PerCube;//a private object to instantiate the primitives of the cubes of zombies and civilians.
+    GameObject CilinZom;
     int corX;//an int for the X-cordinate.
     int corZ;//an int for the Z-cordinate.
     int Instancias;//a varible is created to instantiate the number of cubes that should appear.
     int Instan;//an int varible is created to try the switch cases.
     int conHero;//the accountant for the hero.
     public const int IDI = 25;//an const is made to limit the intancias of the personages.
+
+    public GameObject Guns;
+    public GameObject gunser;
+   
+    public float GunsDam;
+    public static float GunsDamStac;
+    public float Force = 9000f;
+    private float TimeMy = 0.0f;
+    private float Cad;
+    public float FireD = 0.05f;
 
     public static List<GameObject> zomcivnpc = new List<GameObject>();//a list is made for the texts.
     public Text zomText;//becomes a public variable for the text of the Zombie.
@@ -54,7 +65,8 @@ public class Manager : MonoBehaviour
             if (PerCube.name != "Hero")//if the name of the object is different from that of the hero.
             {
                 zomcivnpc.Add(PerCube);//the object is added to the list.
-                if (PerCube.name == "Zombie")//if the name equals Zombie.
+                //zomcivnpc.Add(CilinZom);
+                if (PerCube.name == "Zombie" /*&& CilinZom == "Zombie"*/)//if the name equals Zombie.
                 {
                     contzom += 1;//the counter is added 1.
                 }
@@ -87,10 +99,16 @@ public class Manager : MonoBehaviour
     void Zombie()//a function for the Zombie class.
     {
         PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the zombie primitive.
+        //CilinZom = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         PerCube.transform.position = new Vector3(Mathf.Clamp(corX, -45, 45), 0.5f, Mathf.Clamp(corZ, -45, 45));//zombie cubes are placed in random places.
+        //CilinZom.transform.position = new Vector3(Mathf.Clamp(corX, -45, 45), 0.5f, Mathf.Clamp(corZ, -45, 45));
         PerCube.AddComponent<Zombie>();//to the zombie is added the Zombie class.
+        //CilinZom.AddComponent<Zombie>();
         PerCube.name = "Zombie";//the name of the object is added.
+       // CilinZom.name = "Zombie";
         PerCube.tag = "zombie";
+       // CilinZom.tag = "zombie";
+        
     }
     void Civic()//a function for the Civic class.
     {
@@ -99,6 +117,22 @@ public class Manager : MonoBehaviour
         PerCube.name = "Civic";//the name of the object is added.
         PerCube.tag = "civic";
         PerCube.AddComponent<Civic>();//to the civillian is added the Civic class.
+    }
+
+    void Update()
+    {
+        TimeMy += Time.deltaTime;
+        if (Input.GetButton("Fire1") && TimeMy > Cad)
+        {
+            Cad = TimeMy + FireD;
+            GameObject GunsControl;
+            GunsControl = Instantiate(Guns, gunser.transform.position, gunser.transform.rotation) as GameObject;
+            Rigidbody rb = GunsControl.GetComponent<Rigidbody>();
+            rb.AddRelativeForce(transform.forward * Force);
+            Destroy(GunsControl, 2f);
+            Cad = Cad - TimeMy;
+            TimeMy = 0.0f;
+        }
     }
 }
 public class Instanciar

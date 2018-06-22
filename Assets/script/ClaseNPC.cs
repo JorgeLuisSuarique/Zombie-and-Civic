@@ -63,9 +63,6 @@ public class ClaseNPC : MonoBehaviour
             case 7:
                 transform.position += new Vector3(0,0,0);
                 break;
-            //case 8:
-            //    StateReation();
-            //    break;
         } 
     }
     public void Move()//a function is created for the movement.
@@ -109,10 +106,6 @@ public class ClaseNPC : MonoBehaviour
             cas = Random.Range(5, 7);//calls the switch to move in different positions.
             StartCoroutine(Movement());//it's called coroutine
         }
-        //else if (dat.keep == state.StateReation)
-        //{
-        //   
-        //}
 
     }
 

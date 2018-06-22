@@ -29,21 +29,6 @@ namespace NPC
                 Move();
                 dat.age = Random.Range(15, 100);//the age of the civilians is added at random between 15 and 100 years of age.
             }
-            //public override void StateReation()
-            //{
-            //    foreach (GameObject go in Manager.zomcivnpc)
-            //    {
-            //        if (go.GetComponent<Hero>() || go.GetComponent<Zombie>())
-            //        {
-            //            float distan = Vector3.Distance(go.transform.position, transform.position);
-            //            if (distan <= 5f)
-            //            {
-            //                transform.position = Vector3.MoveTowards(-transform.position, go.transform.position, dat.keepmove);
-            //                Debug.Log("me persiguen");
-            //            }
-            //        }
-            //    }
-            //}
             public override void Update()
             {
                 base.Update();
