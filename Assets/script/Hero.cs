@@ -21,11 +21,14 @@ public class Hero : MonoBehaviour
         Camera.main.transform.SetParent(gameObject.transform);//It looks like the camera with the player.
         Camera.main.gameObject.AddComponent<FPS>();//FPS script is added to the camera.
         GameObject Arm = GameObject.FindWithTag("arm");
-        Arm.transform.parent = transform;
-        Arm.transform.localPosition = new Vector3(0, 0, 0.4f);
-        Arm.transform.localScale = new Vector3(.5f,.5f,.5f);
-        Arm.transform.Rotate(new Vector3(90,0,0),Space.Self);
+        Arm.transform.SetParent(gameObject.transform);
+        Arm.transform.localPosition = new Vector3(.6f, 0, 0.4f);
+        Arm.transform.localScale = new Vector3(2.110794f, 0.2930839f, 0.2930839f);
+        Arm.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
     }
+
+    
+
     public void OnCollisionEnter(Collision collision)//a function for when colliding with objects of the Civic and Zombie class.
     {
         if(collision.gameObject.GetComponent<Civic>())//when it collides with the Civic class.
