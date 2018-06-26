@@ -36,8 +36,13 @@ public class Manager : MonoBehaviour
     public Text texZGO;
     public Text textZomCiv;
 
+    public float vida;
+    public float maxiVida;
+    public Image BarVida;
+
     void Awake()
 	{
+        Start();
         panelHero.gameObject.SetActive(false);
 		Instancias = Random.Range(new Instanciar().identi, IDI);//the objects are instantiated between the construct of the Instanciar and conts class.
         for (int i = 0; i < Instancias; i++)//by the time the cubes are started.
@@ -88,6 +93,27 @@ public class Manager : MonoBehaviour
             }
         }
     }
+
+    public void Start()
+    {
+        maxiVida = vida;
+        ActualizeUI();
+    }
+    public void AplyVida(int IVida)
+    {
+        vida = vida - IVida;
+        ActualizeUI();
+    }
+    public void AplyRecarga(int RVida)
+    {
+        vida = vida + RVida;
+        ActualizeUI();
+    }
+    public void ActualizeUI()
+    {
+        BarVida.fillAmount = (vida / maxiVida);
+    }
+
     void Hero()//a function for the Hero class.
     {
         PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the hero primitive.
