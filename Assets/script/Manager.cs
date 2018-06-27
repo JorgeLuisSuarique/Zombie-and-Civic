@@ -36,7 +36,7 @@ public class Manager : MonoBehaviour
     public Text texZGO;
     public Text textZomCiv;
 
-    public float vida;
+    public int vida = 1000;
     public float maxiVida;
     public Image BarVida;
 
@@ -99,9 +99,9 @@ public class Manager : MonoBehaviour
         maxiVida = vida;
         ActualizeUI();
     }
-    public void AplyVida(int IVida)
+    public void AplyVida(int dano)
     {
-        vida = vida - IVida;
+        vida = vida - dano;
         ActualizeUI();
     }
     public void AplyRecarga(int RVida)

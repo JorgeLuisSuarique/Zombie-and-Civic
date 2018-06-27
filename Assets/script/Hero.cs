@@ -9,8 +9,8 @@ public class Hero : MonoBehaviour
     public Civicdata civil;//a Civic-class struct type barable.
     public Data dt;
     public ZombieData zom;//a Zombie-class struct type barable.
-    Manager Vid2;
     Manager manger;
+
     void Start()
     {
         manger = FindObjectOfType<Manager>().GetComponent<Manager>();
@@ -25,6 +25,7 @@ public class Hero : MonoBehaviour
         Arm.transform.localPosition = new Vector3(.6f, 0, 0.4f);
         Arm.transform.localScale = new Vector3(2.110794f, 0.2930839f, 0.2930839f);
         Arm.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
+
     }
 
     
@@ -40,25 +41,25 @@ public class Hero : MonoBehaviour
         }
         if(collision.gameObject.GetComponent<Zombie>())//when it collides with the Zombie class.
         {
-            Vid2.AplyVida(100);
+            manger.AplyVida(100);
             manger.panelHero.SetActive(true);
-           // manger.panelGO.SetActive(true);
             dt = collision.gameObject.GetComponent<ClaseNPC>().NewData();
             zom = collision.gameObject.GetComponent<Zombie>().zombiezen();//when it collides with the Zombie class.
             manger.textZomCiv.text = "waaaarrr me comere tu " + zom.food;
-            //if (Vid2.vida = 0)
-            //{
-            //    manger.texZGO.text = "Game Over";
-            //    if (Time.timeScale == 1.0f)
-            //    {
-            //        Time.timeScale = 0.0f;
-            //    }
-            //    else
-            //    {
-            //        Time.timeScale = 1.0f;
-            //    }
-            //}
-            
+            if (manger.vida == 0)
+            {
+                manger.panelGO.SetActive(true);
+                manger.texZGO.text = "Game Over";
+                if (Time.timeScale == 1.0f)
+                {
+                    Time.timeScale = 0.0f;
+                }
+                else
+                {
+                    Time.timeScale = 1.0f;
+                }
+            }
+
         }
 
     }
