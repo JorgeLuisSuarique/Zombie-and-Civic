@@ -8,6 +8,9 @@ TagManager:
   - zombie
   - civic
   - arm
+  - municion
+  - cura
+  - Proyectil
   layers:
   - Default
   - TransparentFX

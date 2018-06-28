@@ -1,10 +1,18 @@
 fileFormatVersion: 2
 guid: f971a07e1601efe4096479e54777a9e4
-timeCreated: 1521832399
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Guns: {fileID: 1583809133342066, guid: b471fb1329fb2194fbb05fa591bd9f75, type: 2}
+  - gunser: {instanceID: 0}
+  - zomText: {instanceID: 0}
+  - civText: {instanceID: 0}
+  - panelHero: {instanceID: 0}
+  - panelGO: {instanceID: 0}
+  - texZGO: {instanceID: 0}
+  - textZomCiv: {instanceID: 0}
+  - BarVida: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

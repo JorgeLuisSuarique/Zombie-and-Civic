@@ -17,6 +17,7 @@ public class Manager : MonoBehaviour
 
     public GameObject Guns;
     public GameObject gunser;
+    public GameObject Mun;
    
     public float GunsDam;
     public static float GunsDamStac;
@@ -24,6 +25,10 @@ public class Manager : MonoBehaviour
     private float TimeMy = 0.0f;
     private float Cad;
     public float FireD = 0.05f;
+    public Image BarArm;
+    int ContMun = 25;
+    float MunMax;
+    public Text StateArm;
 
     public static List<GameObject> zomcivnpc = new List<GameObject>();//a list is made for the texts.
     public Text zomText;//becomes a public variable for the text of the Zombie.
@@ -37,19 +42,20 @@ public class Manager : MonoBehaviour
     public Text textZomCiv;
 
     public int vida = 1000;
-    public float maxiVida;
+    float maxiVida;
     public Image BarVida;
+    public GameObject Cur;
 
     void Awake()
 	{
-        Start();
         panelHero.gameObject.SetActive(false);
 		Instancias = Random.Range(new Instanciar().identi, IDI);//the objects are instantiated between the construct of the Instanciar and conts class.
         for (int i = 0; i < Instancias; i++)//by the time the cubes are started.
         {
             corX = Random.Range(-45 , 45);//the coordinates on the X axis.
             corZ = Random.Range(-45, 45);//the coordinates on the Z axis.
-            Instan = Random.Range(1,4);//the number of cases of the switch.
+            Instan = Random.Range(1,5);//the number of cases of the switch.
+
             switch (Instan)
             {
                 case 1:
@@ -66,11 +72,14 @@ public class Manager : MonoBehaviour
                 case 3:
                     Civic();
                     break;
+                case 4:
+                    Infetc();
+                    break;
+                
             }
             if (PerCube.name != "Hero")//if the name of the object is different from that of the hero.
             {
                 zomcivnpc.Add(PerCube);//the object is added to the list.
-                //zomcivnpc.Add(CilinZom);
                 if (PerCube.name == "Zombie" /*&& CilinZom == "Zombie"*/)//if the name equals Zombie.
                 {
                     contzom += 1;//the counter is added 1.
@@ -97,6 +106,7 @@ public class Manager : MonoBehaviour
     public void Start()
     {
         maxiVida = vida;
+        MunMax = ContMun;
         ActualizeUI();
     }
     public void AplyVida(int dano)
@@ -104,7 +114,7 @@ public class Manager : MonoBehaviour
         vida = vida - dano;
         ActualizeUI();
     }
-    public void AplyRecarga(int RVida)
+    public void AplyCurar(int RVida)
     {
         vida = vida + RVida;
         ActualizeUI();
@@ -112,6 +122,17 @@ public class Manager : MonoBehaviour
     public void ActualizeUI()
     {
         BarVida.fillAmount = (vida / maxiVida);
+        BarArm.fillAmount = (ContMun / MunMax);
+    }
+    public void Disparo(int Dis)
+    {
+        ContMun = ContMun - Dis;
+        ActualizeUI();
+    }
+    public void Recarga(int Rec)
+    {
+        ContMun = ContMun + Rec;
+        ActualizeUI();
     }
 
     void Hero()//a function for the Hero class.
@@ -125,24 +146,40 @@ public class Manager : MonoBehaviour
     void Zombie()//a function for the Zombie class.
     {
         PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the zombie primitive.
-        //CilinZom = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         PerCube.transform.position = new Vector3(Mathf.Clamp(corX, -45, 45), 0.5f, Mathf.Clamp(corZ, -45, 45));//zombie cubes are placed in random places.
-        //CilinZom.transform.position = new Vector3(Mathf.Clamp(corX, -45, 45), 0.5f, Mathf.Clamp(corZ, -45, 45));
         PerCube.AddComponent<Zombie>();//to the zombie is added the Zombie class.
-        //CilinZom.AddComponent<Zombie>();
         PerCube.name = "Zombie";//the name of the object is added.
-       // CilinZom.name = "Zombie";
-        PerCube.tag = "zombie";
-       // CilinZom.tag = "zombie";
         
+    }
+    void Infetc()
+    {
+        PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the zombie primitive.
+        PerCube.transform.position = new Vector3(Mathf.Clamp(corX, -45, 45), 0.5f, Mathf.Clamp(corZ, -45, 45));//zombie cubes are placed in random places.
+        PerCube.AddComponent<Infect>();//to the zombie is added the Zombie class.
+        PerCube.name = "Infect";//the name of the object is added.
     }
     void Civic()//a function for the Civic class.
     {
         PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the primitive civilian.
         PerCube.transform.position = new Vector3(corX, 0.5f, corZ);//civilian cubes are placed in random places.
         PerCube.name = "Civic";//the name of the object is added.
-        PerCube.tag = "civic";
         PerCube.AddComponent<Civic>();//to the civillian is added the Civic class.
+    }
+    void Object()
+    {
+        print("fui creado");
+        if (Mun)
+        {
+            Mun.transform.position = new Vector3(corX, 0.5f, corZ);
+            Mun.tag = "municion";
+           
+        }
+        if (Cur)
+        {
+            Cur.transform.position = new Vector3(corX, 0.5f, corZ);
+            Cur.tag = "cura";
+            
+        }
     }
 
     void Update()
@@ -150,24 +187,37 @@ public class Manager : MonoBehaviour
         TimeMy += Time.deltaTime;
         if (Input.GetButton("Fire1") && TimeMy > Cad)
         {
-            Cad = TimeMy + FireD;
-            GameObject GunsControl;
-            GunsControl = Instantiate(Guns, gunser.transform.position, gunser.transform.rotation) as GameObject;
-            Rigidbody rb = GunsControl.GetComponent<Rigidbody>();
-            rb.AddRelativeForce(transform.forward * Force);
-            Destroy(GunsControl, 2f);
-            Cad = Cad - TimeMy;
-            TimeMy = 0.0f;
+            if (ContMun > 0 && ContMun <= 25)
+            {
+                Cad = TimeMy + FireD;
+                GameObject GunsControl;
+                GunsControl = Instantiate(Guns, gunser.transform.position, gunser.transform.rotation) as GameObject;
+                Rigidbody rb = GunsControl.GetComponent<Rigidbody>();
+                rb.AddRelativeForce(transform.forward * Force);
+                Destroy(GunsControl, 2f);
+                Cad = Cad - TimeMy;
+                TimeMy = 0.0f;
+            }
+            if (ContMun == 0)
+            {
+                StateArm.text = "descargado".ToString();
+                ContMun = 0;
+            }
+            
+            Disparo(1);
         }
     }
+   
 }
 public class Instanciar
 {
     public readonly int identi;//a readony for the minimum number of objects to be intented.
+    public readonly int instMC;
 
     public Instanciar()//you become a builder to call it in the Manager class.
     {
         identi = Random.Range(5,15);//he puts on the readony at random.
+        instMC = 6;
     }
     
 }

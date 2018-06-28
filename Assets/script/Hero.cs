@@ -8,7 +8,7 @@ public class Hero : MonoBehaviour
 {
     public Civicdata civil;//a Civic-class struct type barable.
     public Data dt;
-    public ZombieData zom;//a Zombie-class struct type barable.
+    public infectedData zom;//a Zombie-class struct type barable.
     Manager manger;
 
     void Start()
@@ -61,6 +61,16 @@ public class Hero : MonoBehaviour
             }
 
         }
-
+        if (collision.gameObject.CompareTag("municion"))
+        {
+            manger.Recarga(25);
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("cura"))
+        {
+            manger.AplyCurar(150);
+            Destroy(collision.gameObject);
+        }
     }
+    
 }

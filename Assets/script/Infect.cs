@@ -6,7 +6,8 @@ namespace NPC
 {
     namespace Enemy
     {
-        public class Zombie : ClaseNPC
+
+        public class Infect : ClaseNPC
         {
             GameObject[] goci;
             public infectedData ZD;///a struct type varible is crossed.
@@ -34,7 +35,7 @@ namespace NPC
                 Move();
                 dat.age = Random.Range(15, 100);//the age of the civilians is added at random between 15 and 100 years of age.
             }
-        
+
             public override void Update()
             {
                 base.Update();
@@ -62,14 +63,6 @@ namespace NPC
                 {
                     randomColor = Color.cyan;//the color cyan is added.
                 }
-                else if (ZD.zc == ZomColor.magenta)//if the color is magenta.
-                {
-                    randomColor = Color.magenta;//the color magenta is added.
-                }
-                else if (ZD.zc == ZomColor.green)//if the color is green.
-                {
-                    randomColor = Color.green;//the color green is added.
-                }
 
                 return randomColor;//the color variable is returned.
             }
@@ -80,31 +73,11 @@ namespace NPC
                     Civic c = collision.gameObject.GetComponent<Civic>();
                     Zombie z = c;
                 }
-                if (collision.gameObject.CompareTag ("Proyectil"))
+                if (collision.gameObject.CompareTag("Proyectil"))
                 {
                     gameObject.SetActive(false);
                 }
             }
-
-        }
-        #region Enum
-
-        public enum comida//a list is made of the zombies' food.
-        {
-            crebro, torso, braso, mano,
-            pierna
-        }
-        public enum ZomColor//a list is made of the zombie's colors.
-        {
-            cyan, magenta, green
-        }
-        #endregion
-
-        public struct infectedData//the structure is made to be able to call the food, the state and the color to the Zombie class.
-        {
-            public comida food;//becomes a standard enum variable for food.
-            public ZomColor zc;//becomes a standard enum variable for the colors.
         }
     }
 }
-

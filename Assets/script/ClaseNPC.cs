@@ -6,7 +6,7 @@ using NPC.Enemy;
 [RequireComponent(typeof (Rigidbody))]
 public class ClaseNPC : MonoBehaviour
 {
-    public ZombieData zombinfon;
+    public infectedData zombinfon;
     GameObject target;
     Color colint;
     public Data dat;
