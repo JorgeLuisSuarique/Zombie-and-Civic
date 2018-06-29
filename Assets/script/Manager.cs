@@ -39,6 +39,8 @@ public class Manager : MonoBehaviour
 
     public GameObject panelHero;
     public GameObject panelGO;
+    public GameObject PanelYG;
+    public Text texYG;
     public Text texZGO;
     public Text textZomCiv;
 
@@ -107,6 +109,11 @@ public class Manager : MonoBehaviour
                 if (go.name == "Infect")
                 {
                     infTex.text = "Infect : "+ continf.ToString();
+                }
+                if(contzom == 0 && continf == 0)
+                {
+                    PanelYG.SetActive(true);
+                    texYG.text = "YOU GAME".ToString();
                 }
             }
         }
