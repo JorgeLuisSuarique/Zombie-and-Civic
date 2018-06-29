@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Manager : MonoBehaviour 
 {
     GameObject PerCube;//a private object to instantiate the primitives of the cubes of zombies and civilians.
-    GameObject CilinZom;
     int corX;//an int for the X-cordinate.
     int corZ;//an int for the Z-cordinate.
     int Instancias;//a varible is created to instantiate the number of cubes that should appear.
@@ -33,8 +32,10 @@ public class Manager : MonoBehaviour
     public static List<GameObject> zomcivnpc = new List<GameObject>();//a list is made for the texts.
     public Text zomText;//becomes a public variable for the text of the Zombie.
     public Text civText;//becomes a public variable for the Civic text.
+    public Text infTex;
     int contzom; //a counter is made for the Zombie's text.
     int contciv;//a counter is made for the Civic text.
+    int continf;
 
     public GameObject panelHero;
     public GameObject panelGO;
@@ -80,13 +81,17 @@ public class Manager : MonoBehaviour
             if (PerCube.name != "Hero")//if the name of the object is different from that of the hero.
             {
                 zomcivnpc.Add(PerCube);//the object is added to the list.
-                if (PerCube.name == "Zombie" /*&& CilinZom == "Zombie"*/)//if the name equals Zombie.
+                if (PerCube.name == "Zombie")//if the name equals Zombie.
                 {
                     contzom += 1;//the counter is added 1.
                 }
                 if (PerCube.name == "Civic")//if the name matches Civic.
                 {
                     contciv += 1;//the counter is added 1.
+                }
+                if (PerCube.name == "Infect")
+                {
+                    continf += 1;
                 }
             }
             foreach (GameObject go in zomcivnpc)//for each new object and the list.
@@ -99,10 +104,13 @@ public class Manager : MonoBehaviour
                 {
                     civText.text = "Civic : " + contciv.ToString();//the text appears in the Canvas on the scene.
                 }
+                if (go.name == "Infect")
+                {
+                    infTex.text = "Infect : "+ continf.ToString();
+                }
             }
         }
     }
-
     public void Start()
     {
         maxiVida = vida;
@@ -153,9 +161,9 @@ public class Manager : MonoBehaviour
     }
     void Infetc()
     {
-        PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the zombie primitive.
+        PerCube = GameObject.CreatePrimitive(PrimitiveType.Cube);//to create the Infect primitive.
         PerCube.transform.position = new Vector3(Mathf.Clamp(corX, -45, 45), 0.5f, Mathf.Clamp(corZ, -45, 45));//zombie cubes are placed in random places.
-        PerCube.AddComponent<Infect>();//to the zombie is added the Zombie class.
+        PerCube.AddComponent<Infect>();//to the Infect is added the Infect class.
         PerCube.name = "Infect";//the name of the object is added.
     }
     void Civic()//a function for the Civic class.

@@ -121,6 +121,7 @@ public void StateReation()
         GameObject her = GameObject.FindGameObjectWithTag("Hero");
         List<GameObject> Lzom = new List<GameObject>();
         List<GameObject> Lciv = new List<GameObject>();
+        List<GameObject> Linf = new List<GameObject>();
         float cual = 0.01f;
         foreach (GameObject go in Manager.zomcivnpc)
         {
@@ -132,6 +133,10 @@ public void StateReation()
             if (go.GetComponent<Civic>())
             {
                 Lciv.Add(go);
+            }
+            if (go.GetComponent<Infect>())
+            {
+                Linf.Add(go);
             }
         }
         foreach (GameObject to in Lzom)
@@ -152,6 +157,24 @@ public void StateReation()
             }
             
         }
+        foreach (GameObject de in Linf)
+        {
+
+            foreach (GameObject ji in Lciv)
+            {
+                float dist = Vector3.Distance(de.transform.position, ji.transform.position);
+                if (dist <= 5f)
+                {
+                    de.transform.position = Vector3.MoveTowards(de.transform.position, ji.transform.position, cual);
+                }
+            }
+            float dist2 = Vector3.Distance(de.transform.position, her.transform.position);
+            if (dist2 <= 5f)
+            {
+                de.transform.position = Vector3.MoveTowards(de.transform.position, her.transform.position, cual);
+            }
+            
+        }
         foreach (GameObject ji in Lciv)
         {
             foreach (GameObject to in Lzom)
@@ -162,7 +185,16 @@ public void StateReation()
                     ji.transform.position = Vector3.MoveTowards(ji.transform.position , -to.transform.position, cual);
                 }
             }
+             foreach (GameObject de in Linf)
+            {
+                float dist3 = Vector3.Distance (ji.transform.position, de.transform.position);
+                if (dist3 <= 5f)
+                {
+                    ji.transform.position = Vector3.MoveTowards(ji.transform.position , -de.transform.position, cual);
+                }
+            }
         }
+        
 
     }
 
